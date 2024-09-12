@@ -1,0 +1,7 @@
+Unit: HIT140 FOUNDATIONS OF DATA SCIENCE
+Assignment: Assesment 2 - Group Project Presentation
+Members:
+PRACHI KIRAN CHAUHAN : s374966
+KISALKA DEUN HEWAGE  : s374967
+BISMAH FAEZ          : s368428
+MASIRA MANSURI       : s375333

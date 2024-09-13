@@ -81,3 +81,35 @@ for index, row in t_test_results_df.iterrows():
     print(f"Measure: {row['Well-being Measure']}")
     print(f"T-Statistic: {row['T-Statistic']:.3f}")
     print(f"P-Value: {row['P-Value']:.3f}\n")
+    
+
+# Perform T- test to compare total well - being by deprived 
+
+
+# Create a new column for Total Well-being Score by summing selected well-being indicators
+wellbeing_columns = ['Optm', 'Usef', 'Relx', 'Conf', 'Engs', 'Thcklr', 'Goodme', 'Cheer']
+merged_data['Total_Wellbeing'] = merged_data[wellbeing_columns].sum(axis=1)
+
+# Split the data into two groups based on deprivation status
+deprived_group = merged_data[merged_data['deprived'] == 1]['Total_Wellbeing']
+non_deprived_group = merged_data[merged_data['deprived'] == 0]['Total_Wellbeing']
+
+# Perform Independent Samples T-test
+t_statistic, p_value = stats.ttest_ind(deprived_group, non_deprived_group)
+
+# Create a DataFrame to display the results in tabular format
+
+results_table = pd.DataFrame({
+    'Statistic': ['T-statistic', 'P-value'],
+    'Value': [t_statistic, p_value]
+})
+
+print(results_table)
+
+# Visualize the mean well-being scores
+mean_wellbeing = merged_data.groupby('deprived')['Total_Wellbeing'].mean().reset_index()
+sns.barplot(x='deprived', y='Total_Wellbeing', data=mean_wellbeing)
+plt.title('Mean Total Well-being Score by Deprivation Status')
+plt.xlabel('Deprived Area (1=Yes, 0=No)')
+plt.ylabel('Mean Total Well-being Score')
+plt.show()
